@@ -3,6 +3,8 @@ package dockmind.demo.entity;
 
 import jakarta.persistence.*;
 import lombok.Builder;
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
 
 import java.time.LocalDateTime;
 import java.util.UUID;
@@ -17,7 +19,7 @@ import java.util.UUID;
         public DocumentMetadata(){
 
         }
-        public DocumentMetadata(UUID id, String filename, String contentType, Long fileSize, Integer totalPages, Integer totalChunks, DocumentStatus status, String errorMessage, LocalDateTime createdAt, LocalDateTime updatedAt, User user) {
+        public DocumentMetadata(UUID id, String filename, String contentType, Long fileSize, Integer totalPages, Integer totalChunks, DocumentStatus status, String errorMessage, LocalDateTime createdAt, LocalDateTime updatedAt) {
             this.id = id;
             this.filename = filename;
             this.contentType = contentType;
@@ -28,7 +30,7 @@ import java.util.UUID;
             this.errorMessage = errorMessage;
             this.createdAt = createdAt;
             this.updatedAt = updatedAt;
-            this.user = user;
+            /*this.user = user;*/
         }
 
         public void setId(UUID id) {
@@ -107,13 +109,13 @@ import java.util.UUID;
             this.updatedAt = updatedAt;
         }
 
-        public User getUser() {
+   /*     public User getUser() {
             return user;
         }
 
         public void setUser(User user) {
             this.user = user;
-        }
+        }*/
 
         @Id
         @GeneratedValue(strategy = GenerationType.UUID)
@@ -134,13 +136,20 @@ import java.util.UUID;
 
         @Column(length = 1000)
         private String errorMessage;
+
+
+
+        @CreationTimestamp
         @Column(nullable = false, updatable = false)
         private LocalDateTime createdAt;
+
+        @UpdateTimestamp
+        @Column(nullable = false)
         private LocalDateTime updatedAt;
 
 
-        @ManyToOne(fetch = FetchType.LAZY)
+      /*  @ManyToOne(fetch = FetchType.LAZY)
         @JoinColumn(name = "user_id", nullable = false)
-        private User user;
+        private User user;*/
 
     }
