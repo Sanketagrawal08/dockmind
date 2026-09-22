@@ -5,6 +5,7 @@ import dockmind.demo.dto.DocumentResponseDto;
 import dockmind.demo.service.DocumentMetaDataService;
 import io.swagger.v3.oas.annotations.Operation;
 import lombok.RequiredArgsConstructor;
+import org.apache.coyote.Response;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -16,6 +17,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 @RestController("/api/v1/documents")
 @RequiredArgsConstructor
@@ -33,5 +35,22 @@ public class DocumentController {
                                 .data(documentResponseDto).localDateTime(LocalDateTime.now())
                                 .message("Documents uploaded and indexed successfully").build().getMessage());
             }
+
+
+            //api to upload multiple doc
+    @PostMapping(value= "/upload-multiple", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+    public ResponseEntity<ApiResponse<List<DocumentResponseDto>>> uploadmultiple(@RequestParam("files") List<MultipartFile> files){
+        List<DocumentResponseDto> responseDtos = documentService.uploadMultipleDocuments(files);
+        return ResponseEntity.status(HttpStatus.CREATED)
+                .body(
+                        ApiResponse.<List<DocumentResponseDto>>
+                                        builder()
+                                .message("Document uploaded successfully")
+                                .success(true)
+                                .localDateTime(LocalDateTime.now())
+                                .data(responseDtos)
+                                .build()
+                );
+    }
 
 }
