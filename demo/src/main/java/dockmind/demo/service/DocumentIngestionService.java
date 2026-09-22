@@ -27,7 +27,7 @@ public class DocumentIngestionService {
 
 
 
-    // list of focumenst jo parse hoke aayenge unko chunks me convert krengi and mapping kregi ki konsa chunk kis documentko belong karta he
+    // list of document jo parse hoke aayenge unko chunks me convert krengi and mapping kregi ki konsa chunk kis documentko belong karta he
     public int ingest(DocumentMetadata savedDocumentMetadata, List<Document> parsedDocs) {
 
         try{
